@@ -1,169 +1,1041 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en" dir="ltr">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Étoile et Gourmandises - Pâtisserie artisanale à Vitrolles</title>
-    <meta name="description" content="Découvrez les délicieuses créations d'Étoile et Gourmandises, votre pâtisserie artisanale à Vitrolles. Gâteaux, tartes et viennoiseries faits maison avec passion.">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="manifest" href="site.webmanifest">
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="styles.min.css" media="print" onload="this.media='all'">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="The Modern AI Mall - Everything new and advanced in the world of Artificial Intelligence, May 2025" />
+    <title>The Modern AI Mall - Your Gateway to the World of Artificial Intelligence</title>
+    <style>
+        /* --- Global Resets and Base Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* direction: ltr; /* Set globally via html tag */
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px; /* Base font size */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a; /* Base background */
+            color: #f1f5f9;
+            line-height: 1.7;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            padding-top: 80px; /* Space for sticky header */
+        }
+
+        /* --- Particles Background --- */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0; /* Stays left for LTR */
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1; /* Behind all content */
+            background: linear-gradient(135deg, #0f172a, #1b2735, #0f172a);
+        }
+
+        /* --- Header and Navigation --- */
+        #main-header {
+            position: fixed;
+            top: 0;
+            left: 0; /* Stays left for LTR */
+            width: 100%;
+            backdrop-filter: blur(12px);
+            background: rgba(15, 23, 42, 0.85);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #main-header.scrolled {
+            background: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .logo-container img {
+            height: 40px;
+            width: 40px;
+        }
+        
+        .logo-container .logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #38bdf8;
+            cursor: pointer;
+        }
+
+        #main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        #main-nav ul li a {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #e0e7ff;
+            cursor: pointer;
+            position: relative;
+            padding: 0.5rem 0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        #main-nav ul li a::after {
+            content: "";
+            position: absolute;
+            left: 0; /* Adjusted for LTR potential default */
+            bottom: -2px;
+            width: 0;
+            height: 2.5px;
+            background: linear-gradient(90deg, #38bdf8, #60a5fa);
+            border-radius: 2px;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+        /* For LTR, the hover effect might start from left if text-align is left */
+        #main-nav ul li a:hover::after,
+        #main-nav ul li a.active::after {
+            width: 100%;
+            left: 0; 
+        }
+
+
+        #main-nav ul li a:hover,
+        #main-nav ul li a.active {
+            color: #60a5fa;
+        }
+        
+        /* Mobile Menu Toggle */
+        #menu-toggle-cb {
+            display: none;
+        }
+        .menu-toggle-label {
+            display: none;
+            cursor: pointer;
+            width: 2rem;
+            height: 2rem;
+            z-index: 1100;
+            position: absolute; /* Added for explicit positioning */
+            top: 50%;
+            right: 2rem; /* Positioned to the right for LTR */
+            transform: translateY(-50%);
+        }
+        .menu-toggle-label div {
+            width: 100%;
+            height: 3px;
+            background: #38bdf8;
+            margin: 5px 0;
+            border-radius: 2px;
+            transition: 0.4s;
+        }
+
+        /* --- General Section Styling --- */
+        .section {
+            max-width: 960px;
+            margin: 4rem auto;
+            padding: 2.5rem;
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            scroll-margin-top: 100px;
+        }
+
+        .section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: #38bdf8;
+            text-align: center; /* Center is fine for LTR/RTL */
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid #334155;
+        }
+        
+        .section h3 {
+            font-size: 1.6rem;
+            color: #60a5fa;
+            margin-bottom: 1rem;
+        }
+        
+        .section p {
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+        }
+
+        /* --- Fade-in Animation on Scroll --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Button Styles --- */
+        .btn-primary {
+            background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #0ea5e9, #3bd8f8);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+        }
+
+        .btn-secondary {
+            background: #334155;
+            color: #e0e7ff;
+            padding: 0.8rem 1.8rem;
+            border: 1px solid #64748b;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #475569;
+            color: #fff;
+        }
+        
+        .btn-dynamic {
+            background: linear-gradient(270deg, #2563eb, #3b82f6, #60a5fa, #38bdf8);
+            background-size: 600% 600%;
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            animation: gradientShift 12s ease infinite;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-dynamic:hover {
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+            transform: scale(1.03);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- Specific Section Styles --- */
+
+        /* News Section */
+        #news article {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #334155;
+        }
+        #news article:last-child { border-bottom: none; }
+        #news article h3 { font-size: 1.4rem; color: #81a2ff; margin-bottom: 0.3rem; }
+        #news article time { font-size: 0.85rem; color: #64748b; margin-bottom: 0.5rem; display:block; }
+
+        /* Advantages Section */
+        #advantages .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        #advantages .advantage-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.8rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            color: #e0f2fe;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        #advantages .advantage-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 8px 35px rgba(0,0,0,0.3);
+        }
+        #advantages .advantage-card h3 { color: #7dd3fc; font-size: 1.3rem; }
+
+        /* AI Tools Showcase */
+        #ai-tools-showcase .ai-tools-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.8rem;
+            padding: 0;
+        }
+        #ai-tools-showcase .ai-tools-list li {
+            background: #0f172a;
+            padding: 1.5rem;
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        #ai-tools-showcase .ai-tools-list li:hover {
+            transform: translateY(-5px);
+        }
+        #ai-tools-showcase .ai-tools-list li h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        #ai-tools-showcase .ai-tools-list li p { margin-bottom: 1rem; font-size: 0.95rem; }
+        #ai-tools-showcase .ai-tools-list li a { font-weight: bold; text-decoration: none; }
+        #ai-tools-showcase .ai-tools-list li:nth-child(1) { box-shadow: 0 0 15px #2563eb; }
+        #ai-tools-showcase .ai-tools-list li:nth-child(1) h3 { color: #60a5fa; }
+        #ai-tools-showcase .ai-tools-list li:nth-child(1) a { color: #38bdf8; }
+        #ai-tools-showcase .ai-tools-list li:nth-child(2) { box-shadow: 0 0 15px #22c55e; }
+        #ai-tools-showcase .ai-tools-list li:nth-child(2) h3 { color: #4ade80; }
+        #ai-tools-showcase .ai-tools-list li:nth-child(2) a { color: #22c55e; }
+        #ai-tools-showcase .ai-tools-list li:nth-child(3) { box-shadow: 0 0 15px #facc15; }
+        #ai-tools-showcase .ai-tools-list li:nth-child(3) h3 { color: #fde68a; }
+        #ai-tools-showcase .ai-tools-list li:nth-child(3) a { color: #facc15; }
+        #ai-tools-showcase .ai-tools-list li:nth-child(4) { box-shadow: 0 0 15px #ec4899; }
+        #ai-tools-showcase .ai-tools-list li:nth-child(4) h3 { color: #f472b6; }
+        #ai-tools-showcase .ai-tools-list li:nth-child(4) a { color: #ec4899; }
+
+        /* Learning Center (Lessons) */
+        #ai-learning-center .articles-container {
+            display: grid;
+            gap: 2rem;
+        }
+        #ai-learning-center article.lesson {
+            background: #111c33;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        #ai-learning-center article.lesson img {
+            width: 160px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+            border: 2px solid #334155;
+        }
+        #ai-learning-center article.lesson .content h3 { color: #7dd3fc; font-size: 1.3rem; }
+
+        /* Forms (General) */
+        form { display: flex; flex-direction: column; gap: 1.2rem; }
+        form label { font-weight: 600; color: #94a3b8; margin-bottom: 0.2rem; font-size:0.9rem; text-align: left; }
+        form input[type="text"],
+        form input[type="email"],
+        form textarea,
+        form select {
+            padding: 0.9rem;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: #e0e7ff;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        form input[type="text"]:focus,
+        form input[type="email"]:focus,
+        form textarea:focus,
+        form select:focus {
+            outline: none;
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3);
+        }
+        form textarea { resize: vertical; min-height: 100px; }
+        .status-message { margin-top: 1rem; text-align: center; font-weight: 600; opacity: 0; transition: opacity 0.5s ease; }
+        .status-message.show { opacity: 1; }
+
+        /* Pricing Section */
+        #pricing-plans .pricing-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            align-items: stretch;
+        }
+        #pricing-plans .pricing-card {
+            flex: 1 1 280px;
+            max-width: 320px;
+            background: #111c33;
+            border-radius: 15px;
+            padding: 2rem;
+            color: #cbd5e1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            border: 1px solid #334155;
+        }
+        #pricing-plans .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        #pricing-plans .pricing-card h3 { font-size: 1.5rem; color: #7dd3fc; }
+        #pricing-plans .pricing-card .price { font-size: 2.2rem; font-weight: bold; margin: 1rem 0; color: #38bdf8; }
+        #pricing-plans .pricing-card ul { list-style: disc; padding-left: 20px; /* For LTR list bullets */ margin: 1rem 0 1.5rem; flex-grow: 1; text-align: left; }
+        #pricing-plans .pricing-card ul li { margin-bottom: 0.5rem; font-size: 0.95rem; }
+        #pricing-plans .pricing-card.popular {
+            background: linear-gradient(145deg, #0ea5e9, #2563eb);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.5);
+            border: 2px solid #60a5fa;
+        }
+        #pricing-plans .pricing-card.popular h3 { color: white; }
+        #pricing-plans .pricing-card.popular .price { color: #fde047; }
+        #pricing-plans .pricing-card.popular .btn-primary { background: white; color: #2563eb; }
+        #pricing-plans .pricing-card.popular .btn-primary:hover { background: #f0f0f0; }
+
+        /* Testimonials Section */
+        #testimonials-social-proof blockquote {
+            background: #0f172a;
+            padding: 1.8rem;
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+            color: #cbd5e1;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #38bdf8; /* Keep on left for LTR quote style */
+        }
+        #testimonials-social-proof blockquote p { font-style: italic; margin-bottom: 0.8rem; }
+        #testimonials-social-proof blockquote footer { font-weight: bold; color: #94a3b8; font-size: 0.9rem; text-align: left; }
+
+        /* Call to Action (CTA) Section */
+        #main-cta {
+            background: linear-gradient(125deg, #0ea5e9, #2563eb, #5b21b6);
+            padding: 3.5rem 2rem;
+            text-align: center;
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        }
+        #main-cta h2 { font-size: 2.3rem; margin-bottom: 1rem; color: white; border-bottom:none; }
+        #main-cta p { font-size: 1.2rem; margin-bottom: 2.5rem; opacity: 0.9; }
+
+        /* Footer */
+        #main-footer {
+            background: #111827;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            color: #94a3b8;
+            border-top: 1px solid #334155;
+            margin-top: 4rem;
+        }
+        #main-footer nav { margin-bottom: 1rem; gap:1rem; }
+        #main-footer nav a { color: #60a5fa; font-size: 0.9rem; }
+        #main-footer nav a:hover { color: #93c5fd; text-decoration:underline; }
+        #main-footer p { font-size: 0.9rem; }
+
+        /* Responsive adjustments for navigation */
+        @media (max-width: 820px) {
+            #main-nav {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0; /* Full width for LTR */
+                right: 0;
+                background: rgba(15, 23, 42, 0.98);
+                padding: 1rem 0;
+                box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            }
+            #menu-toggle-cb:checked ~ #main-nav { /* Use general sibling combinator */
+                display: flex;
+            }
+            #main-nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+            }
+            #main-nav ul li {
+                width: 100%;
+                text-align: center;
+            }
+            #main-nav ul li a {
+                display: block;
+                padding: 1rem 0;
+                width: 100%;
+                border-bottom: 1px solid #334155;
+            }
+             #main-nav ul li:last-child a {
+                border-bottom: none;
+            }
+            #main-nav ul li a::after { display:none; }
+
+            .menu-toggle-label {
+                display: block;
+            }
+            #menu-toggle-cb:checked ~ .menu-toggle-label div:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            #menu-toggle-cb:checked ~ .menu-toggle-label div:nth-child(2) {
+                opacity: 0;
+            }
+            #menu-toggle-cb:checked ~ .menu-toggle-label div:nth-child(3) {
+                transform: rotate(-45deg) translate(6px, -6px);
+            }
+        }
+        @media (max-width: 600px) {
+            body { padding-top: 70px; }
+            .section { padding: 1.5rem; margin: 2rem auto; }
+            .section h2 { font-size: 1.8rem; }
+            .section h3 { font-size: 1.3rem; }
+            #main-header { padding: 0.8rem 1rem; }
+            .logo-container .logo-text { font-size: 1.3rem; }
+             #main-nav ul li a { font-size: 0.95rem;}
+            .btn-primary, .btn-secondary, .btn-dynamic { font-size: 0.95rem; padding: 0.7rem 1.5rem; }
+            #main-cta h2 {font-size: 1.8rem;}
+            #main-cta p {font-size: 1rem;}
+             .menu-toggle-label { right: 1rem; } /* Adjust hamburger position for smaller padding */
+        }
+
+    </style>
 </head>
+
 <body>
-    <header>
-        <div class="container">
-            <h1>Étoile et Gourmandises</h1>
-            <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu">
-                <span class="sr-only">Menu</span>
-                <i class="fas fa-bars"></i>
-            </button>
-            <nav id="mobile-menu" aria-label="Navigation principale">
-                <div class="menu-section">
-                    <ul>
-                        <li><a href="#accueil">Accueil</a></li>
-						<li><a href="#a-propos">À propos</a></li>
-                        <li><a href="#produits">Nos Délices</a></li>
-						<li><a href="#commande">Commander</a></li>
-                    </ul>
-                </div>
-                <div class="menu-section social-links">
-                    <a href="https://www.facebook.com/people/Etoile-et-gourmandise/100095491869924/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                    <a href="https://www.instagram.com/etoileetgourmandise" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.tiktok.com/@etoilegourmandise13" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-					<a href="https://www.linkedin.com/in/estelle-vuoso-b1a58b291?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                </div>
-                <div class="menu-section">
-                    <a href="#contact" class="contact-button">Contact</a>
-                </div>
-            </nav>
+    <canvas id="particles-canvas"></canvas>
+
+    <header id="main-header">
+        <div class="logo-container">
+            <div class="logo-text" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">AI Mall</div>
         </div>
+        <input type="checkbox" id="menu-toggle-cb">
+        <label class="menu-toggle-label" for="menu-toggle-cb" aria-label="Navigation Menu">
+            <div></div>
+            <div></div>
+            <div></div>
+        </label>
+        <nav id="main-nav">
+            <ul>
+                <li><a href="#hero" class="active">Home</a></li>
+                <li><a href="#news">AI News</a></li>
+                <li><a href="#ai-tools-showcase">Featured Tools</a></li>
+                <li><a href="#ai-learning-center">Learning Center</a></li>
+                <li><a href="#pricing-plans">Pricing</a></li>
+                <li><a href="#ai-support-contact">Contact Us</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main>
-        <section id="accueil" class="hero" aria-labelledby="hero-title">
-            <div class="hero-content">
-                <h2 id="hero-title">L'art de la pâtisserie à votre table</h2>
-                <p>Des créations uniques pour enchanter vos papilles</p>
-            </div>
-        </section>
-		
-		<section id="a-propos" class="container" aria-labelledby="a-propos-title">
-            <h2 id="a-propos-title">À propos</h2>
-            <div class="a-propos-content">
-				<div class="a-propos-image">
-					<img src="img/estelle.jpg" alt="Photo de la propriétaire d'Étoile et Gourmandises" class="profile-pic">
-				</div>
-				<div class="a-propos-text">
-					<p>Je suis ravie de vous présenter mon travail sous un nouveau format, alliant professionnalisme et créativité.</p>
-					<p>En tant que traiteur en pâtisserie, je vous propose une large gamme de créations : des classiques revisités aux innovations gourmandes. De la guimauve artisanale aux entremets sophistiqués, en passant par des muffins moelleux et des tartes savoureuses, mon offre s'étend du sucré au salé.</p>
-					<p>Ma philosophie ? Allier finesse et gourmandise, légèreté et caractère. Chaque création est pensée comme une rencontre harmonieuse de saveurs, où la délicatesse s'unit à l'audace gustative.</p>
-					<p>Ce qui me distingue ? Ma capacité à adapter mes pâtisseries selon vos goûts et vos envies. Que vous ayez une idée précise ou que vous cherchiez des suggestions, je m'engage à réaliser des créations sur-mesure qui répondront parfaitement à vos attentes.</p>
-					<p>Découvrez un univers pâtissier où passion, expertise et personnalisation se conjuguent pour éveiller vos papilles et créer des moments de pur plaisir gustatif.</p>
-				</div>
-			</div>
+        <section id="hero" class="section fade-in" style="text-align: center; padding-top: 4rem; padding-bottom: 4rem; background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1518314916387-032ea8916c69?auto=format&fit=crop&w=1200&q=80') no-repeat center center / cover;">
+            <h1 style="font-size: 3rem; margin-bottom: 1rem; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Welcome to the Modern AI Mall</h1>
+            <p style="font-size: 1.3rem; color: #e0e7ff; margin-bottom: 2rem; max-width: 700px; margin-left:auto; margin-right:auto; text-shadow: 0 1px 3px rgba(0,0,0,0.4);">
+                Everything new and advanced in the world of Artificial Intelligence – tools, knowledge, news, and services all in one place.
+            </p>
+            <a href="#mall-map" class="btn-dynamic">Discover the Mall</a>
         </section>
 
-        <section id="produits" class="container" aria-labelledby="produits-title">
-            <h2 id="produits-title">Nos Délices</h2>
-            <div class="products">
-                <div class="product">
-                    <img src="img/muffin.jpg" 
-                         srcset="img/muffin-300.jpg 300w, img/muffin-600.jpg 600w"
-                         sizes="(max-width: 768px) 100vw, 33vw"
-                         alt="Muffin Abricot et Thym">
-                    <h3>Muffin Abricot et Thym</h3>
-                    <p>Savourez nos délicieux muffins à l'abricot et au thym, une parfaite harmonie entre la douceur de l'abricot caramélisé et les notes aromatiques du thym. Chaque bouchée est un véritable délice, garnie d'amandes croquantes pour une touche de gourmandise supplémentaire.</p>
+        <section id="news" class="section fade-in">
+            <h2>Latest AI News - May 2025</h2>
+            <article>
+                <h3>GPT-5 Integration in Healthcare Systems for Rapid Diagnosis</h3>
+                <time>Published: May 25, 2025</time>
+                <p>Hospitals in Europe have begun integrating GPT-5 for symptom diagnosis and initial real-time medical consultation, reducing workloads and shortening waiting times.</p>
+            </article>
+            <article>
+                <h3>Quantum AI Leads to Breakthroughs in Theoretical Physics</h3>
+                <time>Published: May 23, 2025</time>
+                <p>Q-AI, in collaboration with CERN laboratories, has deciphered complex energy simulations at a previously impossible level, opening new doors to understanding the universe.</p>
+            </article>
+            <article>
+                <h3>AI-Based Personalized Education Systems</h3>
+                <time>Published: May 20, 2025</time>
+                <p>Virtual schools worldwide are adopting AI platforms that analyze each student's learning style and personally tailor study materials for them.</p>
+            </article>
+        </section>
+
+        <section id="advantages" class="section fade-in">
+            <h2>6 Key Advantages of Our AI Mall</h2>
+            <div class="advantages-grid">
+                <div class="advantage-card">
+                    <h3>Processing Speed</h3>
+                    <p>Advanced AI systems providing real-time insights and results, accelerating business processes.</p>
                 </div>
-                <div class="product">
-                    <img src="img/fraisier.jpg" 
-                         srcset="img/fraisier.jpg 300w, img/fraisier.jpg 600w"
-                         sizes="(max-width: 768px) 100vw, 33vw"
-                         alt="Fraisier">
-                    <h3>Fraisier</h3>
-                    <p>Un classique revisité avec passion</p>
+                <div class="advantage-card">
+                    <h3>Personalized Learning</h3>
+                    <p>Learning paths and tools that adapt to the pace and personal goals of each user.</p>
                 </div>
-                <div class="product">
-                    <img src="/api/placeholder/300/200" 
-                         srcset="/api/placeholder/300/200 300w, /api/placeholder/600/400 600w"
-                         sizes="(max-width: 768px) 100vw, 33vw"
-                         alt="Mille-feuille">
-                    <h3>Mille-feuille</h3>
-                    <p>Croustillant et fondant à la fois</p>
+                <div class="advantage-card">
+                    <h3>Advanced Security</h3>
+                    <p>Optimal protection of your data through AI-based security protocols.</p>
+                </div>
+                <div class="advantage-card">
+                    <h3>Technological Innovation</h3>
+                    <p>Access to the most innovative and up-to-date AI technologies in the global market.</p>
+                </div>
+                <div class="advantage-card">
+                    <h3>Continuous Support</h3>
+                    <p>An expert team and supportive community available to assist you with any question or challenge.</p>
+                </div>
+                <div class="advantage-card">
+                    <h3>Ease of Use</h3>
+                    <p>A convenient, intuitive, and user-friendly interface, suitable for all skill levels.</p>
                 </div>
             </div>
-			<div class="instagram-button-container">
-				<a href="https://www.instagram.com/etoileetgourmandise" target="_blank" rel="noopener noreferrer" class="instagram-link">Suivez-nous sur Instagram pour plus de créations gourmandes</a>
-			</div>
         </section>
-		
-		<section id="commande" class="container" aria-labelledby="commande-title">
-			<h2 id="commande-title">Passer une commande</h2>
-			<form id="orderForm" action="https://formspree.io/f/votre_id_formspree" method="POST">
-				<div class="form-group">
-					<label for="customerName">Nom :</label>
-					<input type="text" id="customerName" name="customerName" required>
-				</div>
-				<div class="form-group">
-					<label for="customerEmail">Email :</label>
-					<input type="email" id="customerEmail" name="customerEmail" required>
-				</div>
-				<div class="form-group">
-					<label for="orderDetails">Détails de la commande :</label>
-					<textarea id="orderDetails" name="orderDetails" required></textarea>
-				</div>
-				<div class="form-group">
-					<label for="deliveryDate">Date de livraison souhaitée :</label>
-					<input type="date" id="deliveryDate" name="deliveryDate" required>
-				</div>
-				<button type="submit">Envoyer la commande</button>
-			</form>
-			<div id="orderStatus" style="display: none;"></div>
-		</section>
+        
+        <section id="mall-map" class="section fade-in">
+            <h2>Virtual Mall Map</h2>
+            <p style="text-align:center; margin-bottom:1.5rem;">Choose an area in the mall based on your interest:</p>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.5rem;">
+                <a href="#ai-tools-showcase" style="text-decoration:none;">
+                    <div class="advantage-card"><h3>Leading AI Tools</h3><p>Discover the most powerful tools.</p></div>
+                </a>
+                <a href="#ai-learning-center" style="text-decoration:none;">
+                    <div class="advantage-card"><h3>Advanced Learning Center</h3><p>AI courses and workshops.</p></div>
+                </a>
+                <a href="#ai-for-entrepreneurs" style="text-decoration:none;">
+                     <div class="advantage-card"><h3>Entrepreneur's Corner</h3><p>AI for startups and businesses.</p></div>
+                </a>
+                <a href="#ai-search-module" style="text-decoration:none;">
+                     <div class="advantage-card"><h3>Smart Search</h3><p>Find everything you need.</p></div>
+                </a>
+            </div>
+        </section>
 
-        <section id="contact" class="container" aria-labelledby="contact-title">
-			<h2 id="contact-title">Contactez-nous</h2>
-			<div class="contact-wrapper">
-				<div class="contact-form">
-					<form id="contactForm" action="https://formspree.io/f/mqazkyeo" method="POST">
-						<div class="form-group">
-							<label for="name">Nom :</label>
-							<input type="text" id="name" name="name" required>
-						</div>
-						<div class="form-group">
-							<label for="email">Email :</label>
-							<input type="email" id="email" name="email" required>
-						</div>
-						<div class="form-group">
-							<label for="message">Message :</label>
-							<textarea id="message" name="message" required></textarea>
-						</div>
-						<button type="submit">Envoyer</button>
-					</form>
-					<div id="formStatus" style="display: none;"></div>
-				</div>
-				<div class="contact-map">
-					<div id="map" style="height: 400px;"></div>
-				</div>
-			</div>
-		</section>
+        <section id="ai-tools-showcase" class="section fade-in">
+            <h2>Featured AI Tools at the Mall</h2>
+            <p>Smart and advanced tools in various AI fields to enhance user experience and professional learning.</p>
+            <ul class="ai-tools-list">
+                <li>
+                    <h3>GPT-5 / Claude 3.5</h3>
+                    <p>Advanced language models for conversations, translation, creative writing, analysis, and research assistance.</p>
+                    <a href="https://openai.com" target="_blank" rel="noopener">Details on GPT</a> <span style="color:#fff;">|</span>
+                    <a href="https://anthropic.com" target="_blank" rel="noopener" style="color:#d97706">Details on Claude</a>
+                </li>
+                <li>
+                    <h3>Q-AI (Quantum AI)</h3>
+                    <p>Quantum-based AI systems for solving complex problems, scientific simulations, and theoretical physics.</p>
+                    <a href="#" target="_blank" rel="noopener">Learn More</a>
+                </li>
+                <li>
+                    <h3>AI for Adaptive Learning</h3>
+                    <p>Smart platforms that analyze learning styles and offer personally tailored content and paths.</p>
+                    <a href="#" target="_blank" rel="noopener">Discover More</a>
+                </li>
+                <li>
+                    <h3>AI for Marketing & Content Creation</h3>
+                    <p>Tools for market analysis, campaign optimization, image generation (Midjourney, DALL-E), and video creation (Runway, Pika).</p>
+                    <a href="#" target="_blank" rel="noopener">Learn More</a>
+                </li>
+            </ul>
+        </section>
+
+        <section id="ai-learning-center" class="section fade-in">
+            <h2>AI Learning Center</h2>
+            <div class="articles-container">
+                <article class="lesson fade-in">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1581093588401-17f159f7ed9c?auto=format&fit=crop&w=320&q=80" alt="Machine Learning" />
+                    <div class="content">
+                        <h3>Introduction to Machine Learning</h3>
+                        <p>Understanding the fundamentals of Machine Learning – algorithms (Supervised, Unsupervised), classification, regression, and more.</p>
+                    </div>
+                </article>
+                <article class="lesson fade-in">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=320&q=80" alt="Neural Networks" />
+                    <div class="content">
+                        <h3>Deep Neural Networks</h3>
+                        <p>How neural networks operate, common architectures (CNN, RNN), and the difference between shallow and deep networks.</p>
+                    </div>
+                </article>
+                <article class="lesson fade-in">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=320&q=80" alt="Quantum AI" />
+                    <div class="content">
+                        <h3>Quantum AI - New Breakthroughs</h3>
+                        <p>An overview of advanced quantum models, potential applications, and their impact on the future of AI.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="ai-for-entrepreneurs" class="section fade-in">
+            <h2>AI Entrepreneurship Center: Tools for Your Startup</h2>
+            <div class="advantage-card">
+                <h3>Startup Idea Generator</h3>
+                <p>An AI tool that provides suggestions for business ideas based on target markets, areas of interest, and current technological trends.</p>
+            </div>
+            <div class="advantage-card" style="margin-top:1.5rem;">
+                <h3>AI for Business Plan Writing</h3>
+                <p>Advanced and smart templates for Business Plans, incorporating automated market analysis and data-driven revenue forecasting.</p>
+            </div>
+            <div class="advantage-card" style="margin-top:1.5rem;">
+                <h3>Virtual AI Investment Advisor</h3>
+                <p>A system that simulates investor questions and helps you prepare a winning pitch for venture capital funds.</p>
+            </div>
+        </section>
+
+        <section id="ai-search-module" class="section fade-in" style="text-align:center;">
+            <h2>Smart Search Across the Mall</h2>
+            <p>Find tools, news, courses, and articles quickly and accurately with our advanced search engine.</p>
+            <input type="text" id="smartSearchInputEn" placeholder="Example: Advanced GPT-5 course or medical AI tools..." style="width:clamp(300px, 80%, 600px); margin-top:1rem; text-align:left;"/>
+            <br>
+            <button type="button" class="btn-primary" style="margin-top:1rem;" id="smartSearchBtnEn">Search the Mall</button>
+            <div id="smartSearchResultsEn" style="margin-top:1.5rem; text-align:left; color: #a5b4fc;"></div>
+        </section>
+
+        <section id="ai-recommendation-engine" class="section fade-in">
+            <h2>Personalized AI Recommendation System</h2>
+            <p>Enter your areas of interest or the problem you want to solve, and the system will recommend the most suitable tools and resources for you.</p>
+            <textarea id="recommendationInputEn" rows="4" placeholder="Example: 'I want to improve customer service in my business' or 'Looking for a tool to create professional presentations'..." style="text-align:left;"></textarea>
+            <button type="button" class="btn-primary" id="getRecommendationBtnEn" style="width:100%;">Get Smart Recommendation</button>
+            <div id="recommendationResultEn" style="margin-top:1.5rem; background:#0f172a; padding:1.5rem; border-radius:10px; min-height:70px; color:#a5b4fc; box-shadow:inset 0 0 8px #38bdf8aa; white-space:pre-wrap; text-align:left;"></div>
+        </section>
+
+        <section id="pricing-plans" class="section fade-in">
+            <h2>Flexible Pricing Plans</h2>
+            <p style="text-align:center; margin-bottom:2rem;">Choose the perfect plan for you or your business, and start leveraging the power of Artificial Intelligence today.</p>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Basic Plan</h3>
+                    <div class="price">$29 <span style="font-size:0.8rem; color:#94a3b8;">/month</span></div>
+                    <ul>
+                        <li>Access to a selection of basic tools</li>
+                        <li>Weekly news updates</li>
+                        <li>Community support</li>
+                        <li>50 AI requests per month</li>
+                    </ul>
+                    <button class="btn-secondary">Choose Plan</button>
+                </div>
+                <div class="pricing-card popular">
+                    <h3>Popular Plan</h3>
+                    <div class="price">$59 <span style="font-size:0.8rem; color:white; opacity:0.8;">/month</span></div>
+                    <ul>
+                        <li>Full access to all tools</li>
+                        <li>Real-time news updates</li>
+                        <li>AI courses for beginners & intermediate</li>
+                        <li>250 AI requests per month</li>
+                        <li>Extended technical support</li>
+                    </ul>
+                    <button class="btn-primary">Most Recommended</button>
+                </div>
+                <div class="pricing-card">
+                    <h3>Premium Business Plan</h3>
+                    <div class="price">$99 <span style="font-size:0.8rem; color:#94a3b8;">/month</span></div>
+                    <ul>
+                        <li>All Popular Plan features</li>
+                        <li>Access to advanced API</li>
+                        <li>Personal AI expert consultation</li>
+                        <li>1000 AI requests per month</li>
+                        <li>24/7 VIP support</li>
+                    </ul>
+                    <button class="btn-secondary">Choose Plan</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials-social-proof" class="section fade-in">
+            <h2>What Our Customers Are Saying</h2>
+            <blockquote style="text-align:left;">
+                <p>"Using the tools from the AI Mall completely transformed my business processes. Within a month, my sales skyrocketed and efficiency improved चमत्कारिक रूप से! Highly recommend."</p>
+                <footer>- Dana Cohen, CEO of "Smart Marketing Ltd."</footer>
+            </blockquote>
+            <blockquote style="text-align:left;">
+                <p>"As a student, the Learning Center opened up a whole new world for me. The courses are excellent and the community is supportive. I was able to build impressive projects thanks to the knowledge I gained here."</p>
+                <footer>- Yuval Levi, Computer Science Student</footer>
+            </blockquote>
+             <blockquote style="text-align:left;">
+                <p>"The platform is intuitive and easy to use, and the support I received was outstanding. The AI Mall is truly a One-Stop-Shop for everything related to Artificial Intelligence."</p>
+                <footer>- Michal Shaked, Tech Entrepreneur</footer>
+            </blockquote>
+        </section>
+
+        <section id="main-cta" class="section fade-in">
+            <h2>Ready to Propel Yourself Forward with AI?</h2>
+            <p>Join thousands of users already enjoying the benefits of the Modern AI Mall. Get instant access to tools, knowledge, and support that will help you succeed.</p>
+            <a href="#pricing-plans" class="btn-dynamic" style="font-size:1.3rem; padding: 1.2rem 3rem;">Get Started - Choose Your Plan</a>
+        </section>
+        
+        <section id="user-profile-area" class="section fade-in">
+            <h2>Your Profile at the AI Mall</h2>
+            <p>Personalize your experience at the mall! Tell us about your interests and receive tailored recommendations for tools, courses, and content.</p>
+            <form id="userProfileFormEn">
+                <label for="profileNameEn">Full Name:</label>
+                <input type="text" id="profileNameEn" name="profileNameEn" placeholder="Enter full name">
+
+                <label for="profileInterestEn">Main Areas of Interest (comma-separated):</label>
+                <input type="text" id="profileInterestEn" name="profileInterestEn" placeholder="e.g., Marketing, Development, Graphic Design">
+                
+                <label for="profileLevelEn">AI Knowledge Level:</label>
+                <select id="profileLevelEn" name="profileLevelEn">
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+                <button type="submit" class="btn-primary">Save Profile & Get Recommendations</button>
+            </form>
+            <div id="profileUpdateStatusEn" class="status-message"></div>
+        </section>
+
+        <section id="ai-support-contact" class="section fade-in">
+            <h2>Contact & Support</h2>
+            <p style="text-align:center; margin-bottom:1.5rem;">Encountered an issue? Have a question? Our support team is here to help. Use the form to get in touch or contact us directly.</p>
+            <form id="contactFormMainEn" novalidate>
+                <label for="contactNameEn">Full Name:</label>
+                <input type="text" id="contactNameEn" name="contactNameEn" required minlength="2" />
+                
+                <label for="contactEmailEn">Email:</label>
+                <input type="email" id="contactEmailEn" name="contactEmailEn" required />
+                
+                <label for="contactMessageEn">Message:</label>
+                <textarea id="contactMessageEn" name="contactMessageEn" rows="5" required minlength="10"></textarea>
+                
+                <button type="submit" class="btn-primary" style="width:100%;">Send Inquiry</button>
+            </form>
+            <div id="contactFormStatusEn" class="status-message" style="color:#22c55e;"></div>
+             <p style="text-align:center; margin-top:2rem; font-size:0.9rem; color:#94a3b8;">
+                You can also reach us by email: <a href="mailto:info@modern-ai-mall.com" style="color:#38bdf8;">info@modern-ai-mall.com</a>
+            </p>
+        </section>
+
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Étoile et Gourmandises. Tous droits réservés.</p>
-        </div>
+    <footer id="main-footer">
+        <nav>
+            <a href="#hero">Home</a> |
+            <a href="#news">News</a> |
+            <a href="#ai-tools-showcase">Tools</a> |
+            <a href="#ai-learning-center">Learning</a> |
+            <a href="#pricing-plans">Pricing</a> |
+            <a href="#ai-support-contact">Support</a>
+        </nav>
+        <p>© 2025 The Modern AI Mall. All rights reserved.</p>
+        <p style="font-size:0.8rem; margin-top:0.5rem;">Development and demonstration for competition purposes.</p>
     </footer>
 
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-	<script src="script.js"></script>
+    <script>
+        // --- Particles.js Background ---
+        const particlesCanvas = document.getElementById('particles-canvas');
+        const ctx = particlesCanvas.getContext('2d');
+        let particlesArray = [];
+        let w, h;
+
+        function initCanvas() {
+            w = particlesCanvas.width = window.innerWidth;
+            h = particlesCanvas.height = window.innerHeight;
+        }
+        initCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * w;
+                this.y = Math.random() * h;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.8;
+                this.speedY = (Math.random() - 0.5) * 0.8;
+                this.opacity = Math.random() * 0.3 + 0.05;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > w) this.speedX *= -1;
+                if (this.y < 0 || this.y > h) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(56, 189, 248, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            const numberOfParticles = Math.floor(w * h / 20000);
+            for (let i = 0; i < Math.min(numberOfParticles, 120); i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+        initParticles();
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, w, h);
+            particlesArray.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+        window.addEventListener('resize', () => {
+            initCanvas();
+            initParticles();
+        });
+
+        // --- Sticky Header & Active Nav Link on Scroll ---
+        const mainHeader = document.getElementById('main-header');
+        const navLinks = document.querySelectorAll('#main-nav a');
+        const sections = document.querySelectorAll('main section[id]');
+        const menuToggleCb = document.getElementById('menu-toggle-cb'); // Mobile menu checkbox
+
+        function onScroll() {
+            if (mainHeader) { // Check if header exists
+                if (window.scrollY > 50) {
+                    mainHeader.classList.add('scrolled');
+                } else {
+                    mainHeader.classList.remove('scrolled');
+                }
+            }
+
+            let currentSectionId = 'hero'; // Default to hero
+            const headerOffsetHeight = mainHeader ? mainHeader.offsetHeight : 70; // Fallback
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - headerOffsetHeight - 50;
+                if (window.scrollY >= sectionTop) {
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSectionId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', onScroll);
+        onScroll(); 
+
+        // --- Smooth Scroll for Nav Links & Mobile Menu Close ---
+        navLinks.forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerOffset = mainHeader ? mainHeader.offsetHeight : 70;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+
+                    if (menuToggleCb && menuToggleCb.checked) {
+                        menuToggleCb.checked = false; // Close mobile menu
+                    }
+                }
+            });
+        });
+
+        // --- Intersection Observer for Fade-in Animations ---
+        const fadeInObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            fadeInObserver.observe(el);
+        });
+        
+        const lessonArticles = document.querySelectorAll('#ai-learning-center article.lesson');
+        lessonArticles.forEach(lesson => {
+            fadeInObserver.observe(lesson);
+        });
+
+        // --- Form Submission Handlers (Client-Side Simulation) ---
+        function handleFormSubmit(formId, statusId, processingMsg, successMsg, errorMsg) {
+            const form = document.getElementById(formId);
+            const statusMessageEl = document.getElementById(statusId);
+            if (form && statusMessageEl) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (typeof form.checkValidity === 'function' && !form.checkValidity()) {
+                        statusMessageEl.textContent = errorMsg;
+                        statusMessageEl.style.color = '#f87171';
+                        statusMessageEl.classList.add('show');
+                        setTimeout(() => { statusMessageEl.classList.remove('show'); statusMessageEl.textContent = ''; }, 4000);
+                        return;
+                    }
+
+                    const submitButton = form.querySelector('button[type="submit"]');
+                    const originalButtonText = submitButton ? submitButton.textContent : 'Submit';
+                    if (submitButton) {
+                        submitButton.disabled = true;
+                        submitButton.textContent = 'Sending...';
+                    }
+                    
+                    statusMessageEl.textContent = processingMsg;
+                    statusMessageEl.style.color = '#60a5fa';
+                    statusMessageEl.classList.add('show');
+
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+
+                    statusMessageEl.textContent = successMsg;
+                    statusMessageEl.style.color = '#22c55e';
+                    form.reset();
+                    if (submitButton) {
+                        submitButton.disabled = false;
+                        submitButton.textContent = originalButtonText;
+                    }
+
+                    setTimeout(() => { statusMessageEl.classList.remove('show'); statusMessageEl.textContent = ''; }, 5000);
+                });
+            }
+        }
+
+        handleFormSubmit('contactFormMainEn', 'contactFormStatusEn', 'Processing request...', 'Inquiry sent successfully! We will contact you soon.', 'Please fill in all required fields correctly.');
+        handleFormSubmit('userProfileFormEn', 'profileUpdateStatusEn', 'Updating profile...', 'Profile updated successfully! Recommendations will be tailored soon.', 'Please fill in all required fields.');
+
+        // Smart Search Simulation
+        const smartSearchBtnEn = document.getElementById('smartSearchBtnEn');
+        const smartSearchInputEn = document.getElementById('smartSearchInputEn');
+        const smartSearchResultsEn = document.getElementById('smartSearchResultsEn');
+        if (smartSearchBtnEn) {
+            smartSearchBtnEn.addEventListener('click', () => {
+                const query = smartSearchInputEn.value.trim();
+                smartSearchResultsEn.textContent = query ? `Searching for: "${query}"...` : 'Please enter a search term.';
+                setTimeout(() => {
+                    if (query) smartSearchResultsEn.textContent = `Found 3 relevant results for "${query}". (This is a demo)`;
+                }, 1200);
+            });
+        }
+
+        // Recommendation Engine Simulation
+        const getRecommendationBtnEn = document.getElementById('getRecommendationBtnEn');
+        const recommendationInputEn = document.getElementById('recommendationInputEn');
+        const recommendationResultEn = document.getElementById('recommendationResultEn');
+        if (getRecommendationBtnEn) {
+            getRecommendationBtnEn.addEventListener('click', () => {
+                const query = recommendationInputEn.value.trim();
+                recommendationResultEn.textContent = query ? `Analyzing request for: "${query}"...` : 'Please enter your request for a recommendation.';
+                setTimeout(() => {
+                    if (query) recommendationResultEn.textContent = `Recommendations for "${query}":\n1. Advanced AI course in the field.\n2. Tool X for data analysis.\n3. Professional article on topic Y. (Demo)`;
+                }, 1800);
+            });
+        }
+    </script>
 </body>
 </html>
